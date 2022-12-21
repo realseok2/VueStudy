@@ -1,32 +1,25 @@
-<script setup>
-  import HelloWorld from './components/HelloWorld.vue'
-
-  
-</script>
-
 <script>
-  // new Vue({
-  //   el: '#test',
-  //   data: {              
-  //     testData:'WTF!!!'
-  //   }
-  // })
+import Counter from "./components/Counter.vue";
+import TodoList from "./components/TodoList.vue";
 
-  export default{
-    data() {
-      return {
-        testData : 'WTF'
-      }
-    }
-  }
+export default {
+  components: { Counter, TodoList },
+};
 </script>
 
 <template>
-  <div id="test">
-    <h1>vue study</h1>
-    <p> {{ testData }} </p>
+  <div>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
   </div>
+  <!-- <Counter /> -->
+  <TodoList />
 </template>
+
 
 <style scoped>
 .logo {
