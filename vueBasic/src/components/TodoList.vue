@@ -1,99 +1,94 @@
 <script>
 export default {
-  el : "todo",
+  el: "todo",
   data() {
     return {
-      state   : true,
-      todo    : "",
-      userNm  : "",
-      inputNm : "",
+      inputTodo: "",
+      todo: "",
       todoList: [],
-    }
+      state: 'active',
+    };
   },
+
+  computed: {
+    filterList() {
+      return this.todoList.filter(todo => todo.state === this.state)
+    },
+  },
+
+  // beforeCreate : function() {
+  //   console.log("beforeCreate");
+  // },
+
+  // created : function() {
+  //   console.log("created");
+  // },
+
+  // mounted : function() {
+  //   console.log("mounted");
+  // },
+
+  // updated : function() {
+  //   console.log("updated");
+  // },
 
   watch: {
-      state (state) {
-          //data -> state 데이터가 변경될 때 실행
-          console.log('state: ' + state)
-          this.state = state;
-      },
+    state(state) {
+      console.log("state: " + state);
+      // state = this.state;
+    },
   },
 
-  methods : {
-    //엔터 눌렀을 때
-    setNm() {
-      this.userNm = this.inputNm;
-      console.log(this.state);
+  methods: {
+    changeState(state) {
+      console.log(state);
+      this.state = state;
     },
-
-    //submit 클릭했을 때
-    getNm() {
-      this.userNm = this.inputNm;
-      if(this.userNm == '') {
-        console.log("No Name");
+    
+    setTodo() {
+      if(this.inputTodo == '' || this.inputTodo == null) {
+        alert("할 일을 입력해주세요.");
       } else {
-        console.log("ㅋㅋㅋㅋㅋ");
-
-        this.todoList.push(this.userNm);
-        console.log(this.todoList);
-
-        // axios.get('211.47.239.80:8080/get-todo/홍길동')
-        //     .then((res) => {
-        //         alert(res);
-        //         console.log(res);
-        //     })
-        //     .catch((error) => {
-        //       console.log(error);
-        //     })
-        //     .finally(() => {
-        //       console.log("last");
-        //     });
-      }
+        this.todo = this.inputTodo;
+        this.todoList.push(
+          {
+            todo: this.todo,
+            state: this.state
+            }
+          );
+          this.inputTodo = ""
+        }
     },
 
-    delNm() {
-      console.log("delete");
-      // this.todoId.state = false;
-
-      // if(this.state == true) {
-      //   this.state = false;
-      //   return;
-      // } else if(this.state == false) {
-      //   this.state = true;
-      //   return;
-      // }
-      this.todoList.forEach(state => {
-        console.log("state = " + state);
-        // this.state = false;
-      });
-
-
+    delTodo(list) {
+      console.log(list)
+      list.state = list.state === 'active' ? 'done' : 'active'
     },
-  }
+
+  },
 };
 </script>
+
 
 <template>
   <div id="todo">
     <div>
-      <input type="text" v-model="inputNm" @keyup.enter="setNm">
+      <input type="text" v-model="inputTodo" @keyup.enter="setTodo" />
     </div>
+
+    <b-list-group>
+      <div v-for="list in filterList" >
+        <b-list-group-item class="btn btn-sm" v-model="state" @click="delTodo(list)">{{ list.todo }}</b-list-group-item>
+      </div>
+    </b-list-group>
 
     <br>
-    
+
+    <button type="button" class="btn btn-sm" @click="setTodo">submit</button>
     <div>
-      [ {{ userNm }} ]
+      <button type="button" class="btn btn-sm" @click="changeState('all')">all</button>
+      <button type="button" class="btn btn-sm" @click="changeState('active')">active</button> 
+      <button type="button" class="btn btn-sm" @click="changeState('done')">done</button>
     </div>
-
-    <div class="todoArr" v-for="todoList in todoList" @click="delNm">
-      {{ todoList }}
-    </div>
-
-    <br>
-    
-    <div>
-      <button type="button" @click="getNm">submit</button>
-    </div>
-
   </div>
 </template>

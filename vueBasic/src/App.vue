@@ -1,9 +1,10 @@
 <script>
 import Counter from "./components/Counter.vue";
 import TodoList from "./components/TodoList.vue";
+import AxiosExam from "./components/AxiosExam.vue";
 
 export default {
-  components: { Counter, TodoList },
+  components: { Counter, TodoList, AxiosExam },
 };
 </script>
 
@@ -16,8 +17,11 @@ export default {
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
+
   <!-- <Counter /> -->
-  <TodoList />
+  <!-- <TodoList /> -->
+  <AxiosExam />
+
 </template>
 
 
